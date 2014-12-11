@@ -44,6 +44,7 @@ pageflow.EditorApi = pageflow.Object.extend({
      * Supported options:
      * - translationKey: for the label
      * - path: route to link to
+     * - click: click handler
      */
     this.registerMainMenuItem = function(options) {
       this.mainMenuItems.push(options);
