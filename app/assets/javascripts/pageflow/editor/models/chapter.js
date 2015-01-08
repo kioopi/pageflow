@@ -30,10 +30,16 @@ pageflow.Chapter = Backbone.Model.extend({
   },
 
   addPage: function(options) {
-    return this.pages.create({
+    options = options || {};
+
+    var pos = ('position' in options) ? options.position : this.pages.length;
+
+    var create_opts = {
       chapter_id: this.get('id'),
-      position: options.position || this.pages.length
-    });
+      position: pos
+    };
+
+    return this.pages.create(create_opts);
   },
 
   toJSON: function() {
