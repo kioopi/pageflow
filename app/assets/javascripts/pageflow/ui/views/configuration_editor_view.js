@@ -3,7 +3,7 @@ pageflow.ConfigurationEditorView = Backbone.Marionette.View.extend({
 
   initialize: function() {
     this.tabsView = new pageflow.TabsView({
-      i18n: 'editor.configuration_editor.tabs',
+      i18n: 'pageflow.ui.configuration_editor.tabs',
       defaultTab: this.options.tab
     });
     this.configure();
@@ -34,15 +34,5 @@ _.extend(pageflow.ConfigurationEditorView, {
   repository: {},
   register: function(pageTypeName, prototype) {
     this.repository[pageTypeName] = pageflow.ConfigurationEditorView.extend(prototype);
-  },
-
-  create: function(pageTypeName, options) {
-    if (!this.repository.hasOwnProperty(pageTypeName)) {
-      throw 'No configuration editor registered for page type "' + pageTypeName + '".';
-    }
-
-    options.pageType = pageflow.Page.typesByName[pageTypeName];
-
-    return new this.repository[pageTypeName](options);
   }
 });

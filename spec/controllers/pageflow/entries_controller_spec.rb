@@ -166,6 +166,14 @@ module Pageflow
           expect(response.status).to eq(404)
         end
 
+        it 'uses locale of entry' do
+          entry = create(:entry, :published, published_revision_attributes: {locale: 'de'})
+
+          get(:show, id: entry)
+
+          expect(response.body).to have_selector('html[lang=de]')
+        end
+
         it 'renders widgets for entry' do
           Pageflow.config.widget_types.register(TestWidgetType.new(:name => 'test_widget',
                                                                    :rendered => '<div class="test_widget"></div>'))
@@ -175,6 +183,17 @@ module Pageflow
           get(:show, :id => entry)
 
           expect(response.body).to have_selector('div.test_widget')
+        end
+
+        it 'renders widgets head fragments for entry' do
+          Pageflow.config.widget_types.register(TestWidgetType.new(:name => 'test_widget',
+                                                                   :rendered_head_fragment => '<meta name="some_test" content="value">'))
+          entry = create(:entry, :published)
+          create(:widget, :subject => entry.published_revision, :type_name => 'test_widget')
+
+          get(:show, :id => entry)
+
+          expect(response.body).to have_selector('head meta[name=some_test]', :visible => false)
         end
 
         context 'with configured entry_request_scope' do
@@ -323,6 +342,21 @@ module Pageflow
         get(:partials, :id => entry)
 
         expect(response.body).to have_selector('div.test_widget')
+      end
+
+      it 'uses locale of entry' do
+        Pageflow.config.widget_types.register(TestWidgetType.new(name: 'test_widget',
+                                                                 enabled_in_editor: true,
+                                                                 rendered: lambda { %'<div lang="#{I18n.locale}"></div>' }))
+        user = create(:user)
+        entry = create(:entry, with_member: user)
+        create(:widget, :subject => entry.draft, :type_name => 'test_widget')
+
+        sign_in(user)
+        entry.draft.update(locale: 'de')
+        get(:partials, id: entry)
+
+        expect(response.body).to have_selector('div[lang=de]')
       end
     end
 

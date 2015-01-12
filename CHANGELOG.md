@@ -2,6 +2,52 @@
 
 ### Changes on `master`
 
+##### Manual Update Step
+
+The locale can now be changed on a per user and per entry basis.
+([#220](https://github.com/codevise/pageflow/pull/220))
+
+So far `en` and `de` locales are supported. If you do not wish to allow users
+to change the locale setting, add the following line to your
+`config/initializers/pageflow.rb` file:
+
+     # Make only some locales available
+     config.available_locales = [:de]
+
+##### Public Site
+
+- Twitter share cards support.
+  ([#218](https://github.com/codevise/pageflow/pull/218))
+- Bug fix: Ensure target blank for content links.
+  ([#233](https://github.com/codevise/pageflow/pull/233))
+- Bug fix: Improve top margin of pages without title.
+  ([#223](https://github.com/codevise/pageflow/pull/223))
+- Bug fix: Correct width of title elements with text position right.
+  ([#224](https://github.com/codevise/pageflow/pull/224))
+
+##### Admin/Editor
+
+- Update rich text editor.
+  ([#232](https://github.com/codevise/pageflow/pull/232))
+- Bug fix: Remove unused additional info box fields for background
+  audio page type.
+  ([#226](https://github.com/codevise/pageflow/pull/226))
+- Bug fix: Allow unsetting the custom share image.
+  ([#230](https://github.com/codevise/pageflow/pull/230))
+
+##### Rails Engine
+
+- Refactor default theme to ease importing additional files.
+  ([#229](https://github.com/codevise/pageflow/pull/229))
+- Dispatch media events on video/audio playback.
+  ([#227](https://github.com/codevise/pageflow/pull/227))
+- Remove unused page type engine base class.
+  ([#225](https://github.com/codevise/pageflow/pull/225))
+
+### Version 0.6.0
+
+2014-12-15
+
 ##### Public Site
 
 - Allow displaying a different poster image for video pages on mobile
@@ -16,11 +62,14 @@
 - Allow configuring position of background videos.
   ([#176](https://github.com/codevise/pageflow/pull/176))
 - Allow emphasizing recently added pages.
-  ([#195](https://github.com/codevise/pageflow/pull/195))
+  ([#195](https://github.com/codevise/pageflow/pull/195),
+   [#214](https://github.com/codevise/pageflow/pull/214))
 - Start at bottom of page when scrolling backwards.
   ([#178](https://github.com/codevise/pageflow/pull/178),
    [#184](https://github.com/codevise/pageflow/pull/184),
    [#185](https://github.com/codevise/pageflow/pull/185))
+- Prevent search engine indexing of video/audio file pages.
+  ([#219](https://github.com/codevise/pageflow/pull/219))
 - Improve iOS 8 compatability.
   ([#186](https://github.com/codevise/pageflow/pull/186),
    [#199](https://github.com/codevise/pageflow/pull/199))
@@ -50,7 +99,8 @@
    [#203](https://github.com/codevise/pageflow/pull/203),
    [#207](https://github.com/codevise/pageflow/pull/207),
    [#208](https://github.com/codevise/pageflow/pull/208),
-   [#210](https://github.com/codevise/pageflow/pull/210))
+   [#210](https://github.com/codevise/pageflow/pull/210),
+   [#215](https://github.com/codevise/pageflow/pull/215))
 - Bug fix: Audio kept playing in editor when chaning page type.
   ([#149](https://github.com/codevise/pageflow/pull/149))
 - Bug fix: Do not display edit lock warning after reopening an entry
@@ -73,6 +123,8 @@
    [#198](https://github.com/codevise/pageflow/pull/198))
 - Dispatch global events for Pageflow extensions.
   ([#171](https://github.com/codevise/pageflow/pull/171))
+- Allow widget types to add content to page head.
+  ([#217](https://github.com/codevise/pageflow/pull/217))
 - Richer CSS classes for theming of progress bars.
   ([#177](https://github.com/codevise/pageflow/pull/177))
 - Allow special theming of first page of chapter.

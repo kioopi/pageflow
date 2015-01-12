@@ -8,7 +8,19 @@ module Pageflow
 
     # Name to display in editor.
     def translation_key
-      "pageflow.#{name}.page_type_name"
+      "#{translation_key_prefix}.page_type_name"
+    end
+
+    def description_translation_key
+      "#{translation_key_prefix}.page_type_description"
+    end
+
+    def help_translation_key
+      "#{translation_key_prefix}.page_type_help"
+    end
+
+    def translation_key_prefix
+      "pageflow.#{name}"
     end
 
     # Override to return a string in snake_case.
@@ -134,38 +146,6 @@ module Pageflow
       return super() unless name
       define_method :name do
         name
-      end
-    end
-
-    # Include in your engine if it mainly defines new page types. Sets
-    # up load paths so you can place all files related to a page type
-    # in a single directory. The following structure is proposed for a
-    # page type engine:
-    #
-    #    pageflow-rainbow/
-    #      page_types/
-    #        pageflow/
-    #          rainbow/
-    #            editor.js
-    #            page.html.erb
-    #            page_type.json.jbuilder
-    #          rainbow.css.scss
-    #          rainbow.js
-    #      lib/
-    #        pageflow/
-    #          rainbow/
-    #            engine.rb
-    #            page_type.rb
-    #
-    module Engine
-      extend ActiveSupport::Concern
-
-      included do
-        paths["app/views"] << 'page_types'
-
-        initializer :assets do |config|
-          Rails.application.config.assets.paths << root.join('page_types')
-        end
       end
     end
   end

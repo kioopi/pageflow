@@ -7,6 +7,7 @@ module Pageflow
       @roles = options.fetch(:roles, [])
       @enabled_in_editor = options.fetch(:enabled_in_editor, false)
       @rendered = options.fetch(:rendered, '')
+      @rendered_head_fragment = options.fetch(:rendered_head_fragment, '')
     end
 
     def enabled_in_editor?
@@ -14,7 +15,15 @@ module Pageflow
     end
 
     def render(template, entry)
-      @rendered.html_safe
+      if @rendered.respond_to?(:call)
+        @rendered.call.html_safe
+      else
+        @rendered.html_safe
+      end
+    end
+
+    def render_head_fragment(template, entry)
+      @rendered_head_fragment.html_safe
     end
   end
 end

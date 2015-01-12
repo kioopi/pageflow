@@ -58,9 +58,12 @@ pageflow.PagePreviewView = Backbone.Marionette.View.extend({
 
   update: function() {
     this.$el.removeClass(pageflow.Page.transitions.join(' ')).addClass(this.model.configuration.get('transition'));
-    this.pageType().update(this.$el, this.model.configuration);
+
+    this.pageTypeHooks().update(this.$el, this.model.configuration);
     _.extend(this.$el.data('configuration'), this.model.configuration.attributes);
+
     this.refreshScroller();
+    this.ensureTargetBlankForContentLinks();
   },
 
   updateChapterBeginningClass: function() {
@@ -68,7 +71,7 @@ pageflow.PagePreviewView = Backbone.Marionette.View.extend({
     this.$el.toggleClass('chapter_beginning', chapterBeginning);
   },
 
-  pageType: function() {
+  pageTypeHooks: function() {
     return this.$el.data('pageType');
   },
 
@@ -80,6 +83,10 @@ pageflow.PagePreviewView = Backbone.Marionette.View.extend({
     this.$el.page('refreshScroller');
   },
 
+  ensureTargetBlankForContentLinks: function() {
+    pageflow.links.ensureTargetBlankForContentLinks(this.el);
+  },
+
   initEmbeddedViews: function() {
     var view = this;
 
@@ -89,7 +96,7 @@ pageflow.PagePreviewView = Backbone.Marionette.View.extend({
 
     view.embeddedViews = new Backbone.ChildViewContainer();
 
-    _.each(view.pageType().embeddedEditorViews(), function(item, selector) {
+    _.each(view.embeddedViewDefinitions(), function(item, selector) {
       view.$(selector).each(function() {
         view.embeddedViews.add(new item.view(_.extend(item.options || {}, {
           el: this,
@@ -98,6 +105,14 @@ pageflow.PagePreviewView = Backbone.Marionette.View.extend({
         })).render());
       });
     });
+  },
+
+  embeddedViewDefinitions: function() {
+    return _.extend(
+      {},
+      this.pageTypeHooks().embeddedEditorViews() || {},
+      this.model.pageType().embeddedViews()
+    );
   },
 
   _unescape: function(text) {
