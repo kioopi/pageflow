@@ -122,6 +122,16 @@ pageflow.EditorApi = pageflow.Object.extend({
     };
 
     /**
+     * Returns a promise which resolves to a page selected by the
+     * user.
+     */
+    this.selectPage = function() {
+      return new $.Deferred(function(deferred) {
+        deferred.resolve(parseInt(window.prompt('Insert a page perma id:'), 10));
+      }).promise();
+    };
+
+    /**
      * Failures API
      *
      * Can watch collections for errors saving models and display the error
