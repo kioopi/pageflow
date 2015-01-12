@@ -8,7 +8,19 @@ module Pageflow
 
     # Name to display in editor.
     def translation_key
-      "pageflow.#{name}.page_type_name"
+      "#{translation_key_prefix}.page_type_name"
+    end
+
+    def description_translation_key
+      "#{translation_key_prefix}.page_type_description"
+    end
+
+    def help_translation_key
+      "#{translation_key_prefix}.page_type_help"
+    end
+
+    def translation_key_prefix
+      "pageflow.#{name}"
     end
 
     # Override to return a string in snake_case.
