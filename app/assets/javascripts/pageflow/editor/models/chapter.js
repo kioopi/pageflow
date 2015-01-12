@@ -15,6 +15,13 @@ pageflow.Chapter = Backbone.Model.extend({
       this.save();
     });
 
+    this.configuration = new pageflow.ChapterConfiguration(this.get('configuration') || {});
+
+    this.listenTo(this.configuration, 'change', function() {
+      this.save();
+      this.trigger('change:configuration', this);
+    });
+
     return attributes;
   },
 
@@ -22,10 +29,18 @@ pageflow.Chapter = Backbone.Model.extend({
     return this.isNew() ? this.collection.url() : '/chapters';
   },
 
-  addPage: function() {
-    this.pages.create({
+  addPage: function(options) {
+    options = options || {};
+
+    return this.pages.create({
       chapter_id: this.get('id'),
-      position: this.pages.length
+      position: options.position || this.pages.length
+    });
+  },
+
+  toJSON: function() {
+    return _.extend(_.clone(this.attributes), {
+      configuration: this.configuration.toJSON()
     });
   },
 
