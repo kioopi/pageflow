@@ -6,6 +6,7 @@
 //=require ./slideshow/swipe_gesture
 //=require ./slideshow/hide_text
 //=require ./slideshow/hide_text_on_swipe
+//=require ./slideshow/dom_order_scroll_navigator
 
 pageflow.Slideshow = function($el, configurations) {
   var transitionDuration = 1000,
@@ -42,11 +43,11 @@ pageflow.Slideshow = function($el, configurations) {
   };
 
   this.back = function() {
-    this.goTo(currentPage.prev('.page'), {position: 'bottom'});
+    this.scrollNavigator.back();
   };
 
   this.next = function() {
-    this.goTo(currentPage.next('.page'));
+    this.scrollNavigator.next();
   };
 
   this.goToById = function(id) {
