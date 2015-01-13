@@ -56,9 +56,9 @@ Gem::Specification.new do |s|
 
   # Use jquery as the JavaScript library
   s.add_dependency 'jquery-rails', '~> 3.0'
-  s.add_dependency 'jquery-ui-rails', '~> 4.2'
+  s.add_dependency 'jquery-ui-rails', '~> 5.0'
   s.add_dependency 'jquery-layout-rails', '~> 0.1.0'
-  s.add_dependency 'jquery-fileupload-rails', '~> 0.4.1'
+  s.add_dependency 'jquery-fileupload-rails', '0.4.1'
 
   s.add_dependency 'backbone-rails', '~> 1.0.0'
 
