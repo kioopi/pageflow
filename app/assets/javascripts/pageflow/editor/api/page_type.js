@@ -14,7 +14,9 @@ pageflow.PageType = pageflow.Object.extend({
   },
 
   pageLinks: function(configuration) {
-    return this.options.pageLinks(configuration);
+    if ('pageLinks' in this.options) {
+      return this.options.pageLinks(configuration);
+    }
   },
 
   configurationEditorView: function() {
