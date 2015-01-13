@@ -43,11 +43,11 @@ pageflow.Slideshow = function($el, configurations) {
   };
 
   this.back = function() {
-    this.scrollNavigator.back();
+    this.scrollNavigator.back(currentPage, configurations[currentPage.data('id')]);
   };
 
   this.next = function() {
-    this.scrollNavigator.next();
+    this.scrollNavigator.next(currentPage, configurations[currentPage.data('id')]);
   };
 
   this.goToById = function(id) {
@@ -161,4 +161,6 @@ pageflow.Slideshow = function($el, configurations) {
   scrollIndicator.on('click', _.bind(function(event) {
     this.next();
   }, this));
+
+  this.scrollNavigator = new pageflow.sitemap.ScrollNavigator(this, configurations);
 };
