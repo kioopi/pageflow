@@ -43,11 +43,11 @@ pageflow.Slideshow = function($el, configurations) {
   };
 
   this.back = function() {
-    this.scrollNavigator.back(currentPage, configurations[currentPage.data('id')]);
+    this.scrollNavigator.back(currentPage, configurations[currentPage.data('id')] || currentPage.data('configuration'));
   };
 
   this.next = function() {
-    this.scrollNavigator.next(currentPage, configurations[currentPage.data('id')]);
+    this.scrollNavigator.next(currentPage, configurations[currentPage.data('id')] || currentPage.data('configuration'));
   };
 
   this.goToById = function(id) {
