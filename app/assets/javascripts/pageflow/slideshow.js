@@ -54,9 +54,9 @@ pageflow.Slideshow = function($el, configurations) {
     this.goTo($el.find('[data-id=' + id + ']'));
   };
 
-  this.goToByPermaId = function(permaId) {
+  this.goToByPermaId = function(permaId, options) {
     if (permaId) {
-      this.goTo($el.find('#' + permaId));
+      return this.goTo($el.find('#' + permaId), options);
     }
   };
 
@@ -69,7 +69,7 @@ pageflow.Slideshow = function($el, configurations) {
         currentPage = page;
         currentPageIndex = currentPage.index();
 
-        var direction = currentPageIndex > previousPage.index() ? 'forwards' : 'backwards';
+        var direction = options.direction || (currentPageIndex > previousPage.index() ? 'forwards' : 'backwards');
 
         previousPage.page('deactivate', {direction: direction});
         currentPage.page('activate', {direction: direction, position: options.position});
@@ -77,6 +77,8 @@ pageflow.Slideshow = function($el, configurations) {
         preload.start(currentPage);
         $el.trigger('slideshowchangepage');
       }, this);
+
+      return true;
     }
   };
 
