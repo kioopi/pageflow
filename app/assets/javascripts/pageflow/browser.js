@@ -1,7 +1,7 @@
 //= require_self
-//= require_tree ./features
+//= require_tree ./browser
 
-pageflow.features = (function(){
+pageflow.browser = (function(){
   var tests = {},
       results = {},
       ready = new $.Deferred();
@@ -11,7 +11,7 @@ pageflow.features = (function(){
     on: {},
     unset: {},
 
-    add: function(name, test) {
+    feature: function(name, test) {
       var s = name.replace(/ /g, '_');
 
       this.off[s] = function() {
@@ -48,7 +48,7 @@ pageflow.features = (function(){
       return ready.promise();
     },
 
-    detect: function() {
+    detectFeatures: function() {
       var promises = {};
 
       var asyncHas = function(name) {
