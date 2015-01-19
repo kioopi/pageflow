@@ -11,8 +11,8 @@ pageflow.PageLinksView = Backbone.Marionette.ItemView.extend({
     'click .add_link': function() {
       var view = this;
 
-      pageflow.editor.selectPage().then(function(permaId) {
-        view.model.pageLinks().addLink(permaId);
+      pageflow.editor.selectPage().then(function(page) {
+        view.model.pageLinks().addLink(page.get('perma_id'));
       });
 
       return false;

@@ -126,9 +126,7 @@ pageflow.EditorApi = pageflow.Object.extend({
      * user.
      */
     this.selectPage = function() {
-      return new $.Deferred(function(deferred) {
-        deferred.resolve(parseInt(window.prompt('Insert a page perma id:'), 10));
-      }).promise();
+      return pageflow.PageSelectionView.selectPage();
     };
 
     /**
