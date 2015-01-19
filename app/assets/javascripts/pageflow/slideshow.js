@@ -50,8 +50,8 @@ pageflow.Slideshow = function($el, configurations) {
     this.scrollNavigator.next(currentPage, configurations[currentPage.data('id')] || currentPage.data('configuration'));
   };
 
-  this.goToById = function(id) {
-    this.goTo($el.find('[data-id=' + id + ']'));
+  this.goToById = function(id, options) {
+    this.goTo($el.find('[data-id=' + id + ']'), options);
   };
 
   this.goToByPermaId = function(permaId, options) {
