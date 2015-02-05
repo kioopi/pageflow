@@ -6,8 +6,8 @@
 @import "./blank_entry";
 @import "./dialogs";
 @import "./colors";
-@import "./embedded";
 @import "./background_positioning";
+@import "./page_selection";
 @import "./files_explorer";
 @import "./locked";
 @import "./help";
@@ -49,6 +49,7 @@
   @import "./outline";
   @import "./failures";
   @import "./menu";
+  @import "./inputs";
   @import "./manage_files";
   @import "./files";
   @import "./confirm_encoding";
@@ -64,6 +65,7 @@
   @import "./quotas";
   @import "./back_button_decorator";
   @import "./widgets";
+  @import "./page_links";
 
   a.publish {
     @include eye-icon;
