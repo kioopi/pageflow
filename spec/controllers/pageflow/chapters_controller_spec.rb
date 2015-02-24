@@ -117,6 +117,50 @@ module Pageflow
       end
     end
 
+    describe '#update_configurations' do
+      it 'updates configurations of chapters' do
+        user = create(:user)
+        entry = create(:entry)
+        chapters = create_list(:chapter, 2, :revision => entry.draft)
+        create(:membership, :entry => entry, :user => user)
+
+        sign_in user
+        aquire_edit_lock(user, entry)
+        put(:update_configurations, [{
+          :chapterId => chapters.first.id,
+          :configuration => {
+            :row => 1
+          }
+        },{
+          :chapterId => chapters.last.id,
+          :configuration => {
+            :lane => 3
+          }
+        }].to_json, :entry_id => entry, :format => 'json')
+
+        expect(chapters.first.reload.configuration['row']).to eq(1)
+        expect(chapters.last.reload.configuration['lane']).to eq(3)
+      end
+
+      it 'requires signed in user to be member of the parent entry' do
+        user = create(:user)
+        entry = create(:entry)
+
+        sign_in user
+        put(:update_configurations, {}.to_json, :entry_id => entry, :format => 'json',)
+
+        expect(response.status).to eq(403)
+      end
+
+      it 'requires authentication' do
+        chapter = create(:chapter)
+
+        put(:update_configurations, :entry_id => chapter.entry, :format => 'json')
+
+        expect(response.status).to eq(401)
+      end
+    end
+
     describe '#destroy' do
       it 'destroys chapter' do
         user = create(:user)

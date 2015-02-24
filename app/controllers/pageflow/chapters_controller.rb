@@ -49,6 +49,27 @@ module Pageflow
       respond_with(chapter)
     end
 
+    def update_configurations
+      # Expects an json-array of objects in body.
+      # Each object contains attributes 'chapterId' and 'configuration':
+      # [{
+      #   chapterId: 1,
+      #   configuration: {
+      #     row: 1,
+      #     lane: 2
+      #   }
+      # }]
+      entry = DraftEntry.find(params[:entry_id])
+      authorize!(:edit_outline, entry.to_model)
+
+      req = ActiveSupport::JSON.decode(request.body)
+      req.each do |update|
+        entry.chapters.update(update['chapterId'], :configuration => update['configuration'])
+      end
+
+      head :internal_server_error
+    end
+
     private
 
     def chapter_params
