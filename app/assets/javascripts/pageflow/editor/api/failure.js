@@ -52,3 +52,8 @@ pageflow.OrderingFailure = pageflow.Failure.extend({
     return this.collection.saveOrder();
   }
 });
+
+pageflow.UpdateConfigurationsFailure = pageflow.Failure.extend({
+  type: 'UpdateConfigurationsFailure',
+  canRetry: false
+});
