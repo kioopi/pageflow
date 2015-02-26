@@ -2,7 +2,19 @@
 
 ### Changes on `master`
 
-None so far.
+##### Deprecations
+
+- The configuration API for registering new page types has
+  changed. Turn calls of the form
+
+        config.register_page_type(Pageflow::Some.page_type)
+
+  into
+
+        config.page_types.register(Pageflow::Some.page_type)
+
+  The old method still exists for now, but will be removed before
+  version 1.0.
 
 ### Version 0.7.2
 
