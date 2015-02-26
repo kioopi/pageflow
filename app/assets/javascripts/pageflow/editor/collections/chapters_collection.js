@@ -25,22 +25,19 @@ pageflow.ChaptersCollection = Backbone.Collection.extend({
       };
     });
 
-    // excute the change without auto-saving
-    _.each(configurationData, function(update) {
-      update.chapter.configuration.set({
-        row: update.row,
-        lane: update.lane
-      }, { silent: true });
-    }, this);
-    collection.trigger('change:configuration');
-
     // prepare data to send to server
     var serverData = _.map(configurationData, function(update) {
+
+      // excute the change without auto-saving to server
+      update.chapter.configuration.set(update.configuration, { silent: true });
+
       return {
         chapterId: update.chapter.id,
         configuration: update.configuration
       };
     });
+
+    collection.trigger('change:configuration');
 
     // send data to server
     return Backbone.sync('update', parentModel, {

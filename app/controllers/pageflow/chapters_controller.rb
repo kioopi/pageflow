@@ -59,6 +59,7 @@ module Pageflow
       #     lane: 2
       #   }
       # }]
+
       entry = DraftEntry.find(params[:entry_id])
       authorize!(:edit_outline, entry.to_model)
 
@@ -67,7 +68,7 @@ module Pageflow
         entry.chapters.update(update['chapterId'], :configuration => update['configuration'])
       end
 
-      head :internal_server_error
+      head :no_content
     end
 
     private
