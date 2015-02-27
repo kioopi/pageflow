@@ -49,7 +49,7 @@ module Pageflow
       respond_with(chapter)
     end
 
-    def update_configurations
+    def batch_update
       # Expects an json-array of objects in body.
       # Each object contains attributes 'chapterId' and 'configuration':
       # [{
@@ -69,6 +69,7 @@ module Pageflow
       end
 
       head :no_content
+      # head :internal_server_error
     end
 
     private

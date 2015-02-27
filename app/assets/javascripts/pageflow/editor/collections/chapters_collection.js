@@ -1,3 +1,4 @@
+
 pageflow.ChaptersCollection = Backbone.Collection.extend({
   model: pageflow.Chapter,
 
@@ -11,37 +12,25 @@ pageflow.ChaptersCollection = Backbone.Collection.extend({
     return chapter.get('position');
   },
 
-  updateConfigurations: function(configurationData) {
+  batchUpdate: function(configurationData) {
     var parentModel = this.parentModel;
     var collection = this;
 
-    // keep old configurations to be able to reset after server error
-    var oldConfigurations = _.map(configurationData, function(update) {
-      return {
-        chapter: update.chapter,
-        configuration: _.object(_.map(_.keys(update.configuration), function(key) {
-          return [key, update.chapter.configuration.get(key)];
-        }))
-      };
-    });
+    var revert = this._getRevertFunc(configurationData);
 
     // prepare data to send to server
     var serverData = _.map(configurationData, function(update) {
-
       // excute the change without auto-saving to server
       update.chapter.configuration.set(update.configuration, { silent: true });
 
-      return {
-        chapterId: update.chapter.id,
-        configuration: update.configuration
-      };
+      return _.pick(update, ['chapterId', 'configuration']);
     });
 
     collection.trigger('change:configuration');
 
     // send data to server
     return Backbone.sync('update', parentModel, {
-      url: collection.url() + '/update_configurations',
+      url: collection.url() + '/batch_update',
       data: JSON.stringify(serverData),
 
       success: function(response) {
@@ -50,9 +39,7 @@ pageflow.ChaptersCollection = Backbone.Collection.extend({
 
       error: function(jqXHR,  textStatus, errorThrown) {
         // undo changes if server fails
-        _.each(oldConfigurations, function(update) {
-          update.chapter.configuration.set(update.configuration, { silent: true });
-        }, this);
+        revert();
         collection.trigger('change:configuration');
 
         // TODO: trigger error?
@@ -60,5 +47,24 @@ pageflow.ChaptersCollection = Backbone.Collection.extend({
         pageflow.editor.failures.add(error);
       }
     });
+  },
+
+  _getRevertFunc: function(configurationData) {
+    // keep old configurations to be able to reset after server error
+    var oldConfigurations = _.map(configurationData, function(update) {
+      return {
+        chapter: update.chapter,
+        configuration: update.chapter.configuration.pick(_.keys(update.configuration))
+      };
+    });
+
+    return function() {
+      _.each(oldConfigurations, function(update) {
+        update.chapter.configuration.set(update.configuration, { silent: true });
+      }, this);
+    };
   }
+
 });
+
+

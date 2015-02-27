@@ -10,7 +10,7 @@ Pageflow::Engine.routes.draw do
       resources :chapters, :only => [:create, :update, :destroy] do
         collection do
           patch :order
-          put :update_configurations
+          put :batch_update
         end
 
         resources :pages, :only => [:create, :update, :destroy] do
