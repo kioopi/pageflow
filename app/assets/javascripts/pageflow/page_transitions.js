@@ -20,3 +20,5 @@ pageflow.pageTransitions = {
 
 pageflow.pageTransitions.register('scroll', {duration: 1100});
 pageflow.pageTransitions.register('fade', {duration: 1100});
+pageflow.pageTransitions.register('scroll_left', {duration: 1100});
+pageflow.pageTransitions.register('scroll_right', {duration: 1100});
