@@ -44,6 +44,7 @@ Gem::Specification.new do |s|
 
   # File attachments
   s.add_dependency 'paperclip', '~> 3.5'
+  s.add_dependency 'cocaine', '0.5.5'
 
   # zencoder
   s.add_dependency 'zencoder', '~> 2.5'
