@@ -8,3 +8,10 @@ Pageflow.configure do |config|
 
   config.help_entries.register('pageflow.help_entries.publishing', priority: 5)
 end
+
+Pageflow.after_configure do |config|
+  config.page_types.each do |page_type|
+    config.help_entries.register(page_type.help_entry_translation_key,
+                                 parent: 'pageflow.help_entries.page_types')
+  end
+end

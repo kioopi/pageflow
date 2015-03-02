@@ -9,8 +9,6 @@ module Pageflow
 
     def enable(config)
       config.page_types.register(page_type)
-      config.help_entries.register(page_type.help_entry_translation_key,
-                                   parent: 'pageflow.help_entries.page_types')
     end
 
     def name_translation_key
